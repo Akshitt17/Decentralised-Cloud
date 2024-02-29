@@ -1,15 +1,12 @@
-const hre = require("hardhat");
+const Upload = artifacts.require("Upload");
 
-async function main() {
-  const Upload = await hre.ethers.getContractFactory("Upload");
-  const upload = await Upload.deploy();
-
-  await upload.deployed();
-
-  console.log("Library deployed to:", upload.address);
-}
-
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+module.exports = async function (deployer) {
+  try {
+    await deployer.deploy(Upload);
+    const upload = await Upload.deployed();
+    console.log("Library deployed to:", upload.address);
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
